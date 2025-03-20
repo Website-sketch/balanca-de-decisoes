@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balança de Decisões</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .balanca-container {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            margin: 50px auto;
+        }
+        .barra {
+            width: 200px;
+            height: 10px;
+            background: black;
+            position: absolute;
+            top: 50px;
+            transform-origin: center;
+            transition: transform 0.5s ease-in-out;
+        }
+        .prato {
+            width: 80px;
+            height: 10px;
+            background: gray;
+            position: absolute;
+            top: 60px;
+        }
+        .esquerda { left: 0; }
+        .direita { right: 0; }
+    </style>
+</head>
+<body>
+    <h2>Balança de Decisões</h2>
+    <div>
+        <input type="text" id="item" placeholder="Digite um item">
+        <input type="number" id="peso" placeholder="Peso">
+        <select id="lado">
+            <option value="esquerda">Esquerda</option>
+            <option value="direita">Direita</option>
+        </select>
+        <button onclick="adicionarItem()">Adicionar</button>
+    </div>
+    <div class="balanca-container">
+        <div class="barra" id="barra"></div>
+        <div class="prato esquerda" id="prato-esquerda"></div>
+        <div class="prato direita" id="prato-direita"></div>
+    </div>
+    <script>
+        let pesoEsquerda = 0;
+        let pesoDireita = 0;
+        
+        function adicionarItem() {
+            const item = document.getElementById("item").value;
+            const peso = parseFloat(document.getElementById("peso").value) || 0;
+            const lado = document.getElementById("lado").value;
+            
+            if (lado === "esquerda") {
+                pesoEsquerda += peso;
+            } else {
+                pesoDireita += peso;
+            }
+            atualizarBalanca();
+        }
+        
+        function atualizarBalanca() {
+            const barra = document.getElementById("barra");
+            const inclinacao = (pesoDireita - pesoEsquerda) * 2;
+            barra.style.transform = `rotate(${inclinacao}deg)`;
+        }
+    </script>
+</body>
+</html>
